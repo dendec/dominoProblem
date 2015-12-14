@@ -6,6 +6,7 @@
 package com.hys.enterprise.dominoes.solvers;
 
 import com.hys.enterprise.dominoes.model.AbstractDomino;
+import com.hys.enterprise.dominoes.model.DominoBucket;
 import com.hys.enterprise.dominoes.model.DominoTile;
 import com.hys.enterprise.dominoes.model.DominoTileChain;
 import java.util.Arrays;
@@ -21,11 +22,25 @@ public class LongestChainBacktrackingSolverTest {
     
     private final LongestChainBacktrackingSolver solver = new LongestChainBacktrackingSolver(); 
     
+     /**
+     * Test of solve method of full set, of class LongestChainBFS.
+     *
+     * @throws com.hys.enterprise.dominoes.model.DominoBucket.DominoBucketIsEmptyException
+     */
+    @Test
+    public void testSolve28() throws DominoBucket.DominoBucketIsEmptyException {
+        List<AbstractDomino> dominoes
+                = DominoBucket.getInstance().getRandomTiles(28);
+        Integer expResult = 28;
+        DominoTileChain result = (DominoTileChain) solver.solve(dominoes);
+        System.out.println(result);
+        assertEquals("28 element chain:", expResult, result.length());
+    }
+    
     /**
      * Test of solve method with result length 1, of class LongestChainDFS.
      *
-     * @throws
-     * com.hys.enterprise.dominoes.model.DominoeTile.InvalidDominoTileException
+     * @throws com.hys.enterprise.dominoes.model.DominoBucket.DominoBucketIsEmptyException
      */
     @Test
     public void testSolve1() throws DominoTile.InvalidDominoTileException {
