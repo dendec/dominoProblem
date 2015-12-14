@@ -5,7 +5,7 @@
  */
 package com.hys.enterprise.dominoes.solvers;
 
-import com.hys.enterprise.dominoes.model.AbstractDominoe;
+import com.hys.enterprise.dominoes.model.AbstractDomino;
 import com.hys.enterprise.dominoes.utils.Graph;
 import java.util.List;
 import java.util.Optional;
@@ -14,12 +14,12 @@ import java.util.Optional;
  *
  * @author denis
  */
-public class LongestChainEulerianPathSolver implements DominoeSolverInterface {
+public class LongestChainEulerianPathSolver implements DominoSolverInterface {
 
-    private Graph<AbstractDominoe> graph;
+    private Graph<AbstractDomino> graph;
 
     @Override
-    public AbstractDominoe solve(List<AbstractDominoe> dominoes) {
+    public AbstractDomino solve(List<AbstractDomino> dominoes) {
        // Collections.sort(dominoes);
         graph = new Graph<>(dominoes);
         System.out.println(graph);
@@ -30,7 +30,7 @@ public class LongestChainEulerianPathSolver implements DominoeSolverInterface {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private Optional<Integer> getOddVertex(Graph<AbstractDominoe> graph) {
+    private Optional<Integer> getOddVertex(Graph<AbstractDomino> graph) {
         Integer vertex = null;
         for (Integer node = 0; node < graph.getNodesNumber(); node++) {
             System.out.println(node + " " + graph.getVertexDegree(node));
@@ -48,8 +48,8 @@ public class LongestChainEulerianPathSolver implements DominoeSolverInterface {
             if (graph.hasEdge(vertex, destination) && isVaildNextEdge(vertex, destination)) {
                 System.out.println(" source : " + vertex + " destination " + destination);
                 graph.removeEdge(vertex, destination);
-                AbstractDominoe currentTile = graph.getNodes().get(vertex);
-                AbstractDominoe destinationTile = graph.getNodes().get(destination);
+                AbstractDomino currentTile = graph.getNodes().get(vertex);
+                AbstractDomino destinationTile = graph.getNodes().get(destination);
                 System.out.println(" source : " + currentTile + " destination " + destinationTile);
                 
                 Integer common = currentTile.getCommonValue(destinationTile).get();

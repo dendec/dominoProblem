@@ -12,7 +12,7 @@ import java.util.Optional;
  *
  * @author denis
  */
-public abstract class AbstractDominoe implements Connectable {
+public abstract class AbstractDomino implements Connectable {
 
     public static final Integer MIN_VALUE = 0;
     public static final Integer MAX_VALUE = 6;
@@ -21,7 +21,7 @@ public abstract class AbstractDominoe implements Connectable {
      * Change order of domino values.
      * @return new instance with swapped values
      */
-    public abstract AbstractDominoe swap();
+    public abstract AbstractDomino swap();
 
     /**
      *
@@ -43,8 +43,8 @@ public abstract class AbstractDominoe implements Connectable {
      */
     @Override
     public Boolean canBeConnected(Connectable other) {
-        if (other instanceof AbstractDominoe) {
-            AbstractDominoe otherDominoe = (AbstractDominoe) other;
+        if (other instanceof AbstractDomino) {
+            AbstractDomino otherDominoe = (AbstractDomino) other;
             return otherDominoe.containsValue(getValueLeft())
                     || otherDominoe.containsValue(getValueRight());
         } else {
@@ -62,7 +62,7 @@ public abstract class AbstractDominoe implements Connectable {
         return getValueLeft().equals(value) || getValueRight().equals(value);
     }
     
-    public Optional<Integer> getCommonValue(AbstractDominoe other) {
+    public Optional<Integer> getCommonValue(AbstractDomino other) {
         if (containsValue(other.getValueLeft()))
             return Optional.of(other.getValueLeft());
         else if(containsValue(other.getValueRight()))

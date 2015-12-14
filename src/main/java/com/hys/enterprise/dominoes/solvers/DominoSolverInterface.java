@@ -5,13 +5,13 @@
  */
 package com.hys.enterprise.dominoes.solvers;
 
-import com.hys.enterprise.dominoes.model.AbstractDominoe;
+import com.hys.enterprise.dominoes.model.AbstractDomino;
 import java.util.List;
 
 /**
  * interface for solving any dominoe problems
  * @author denis
  */
-public interface DominoeSolverInterface {
-    AbstractDominoe solve(List<AbstractDominoe> dominoes);
+public interface DominoSolverInterface {
+    AbstractDomino solve(List<AbstractDomino> dominoes);
 }

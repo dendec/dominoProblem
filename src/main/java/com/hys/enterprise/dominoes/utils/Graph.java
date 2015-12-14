@@ -77,7 +77,6 @@ public class Graph<T extends Connectable> {
     public Integer getVertexDegree(Integer vertex) {
         Integer degree = 0;
         for (int destinationVertex = 0; destinationVertex < nodesNumber; destinationVertex++) {
-            //System.out.println(vertex + " " + degree);
             if (hasEdge(vertex, destinationVertex)) {
                 degree++;
             }

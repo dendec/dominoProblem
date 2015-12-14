@@ -13,11 +13,11 @@ import java.util.Objects;
  * Chains of dominoes. Immutable.
  * @author denis
  */
-public class DominoeTileChain extends AbstractDominoe implements Comparable<DominoeTileChain> {
+public class DominoTileChain extends AbstractDomino implements Comparable<DominoTileChain> {
 
-    private final LinkedList<AbstractDominoe> chain;
+    private final LinkedList<AbstractDomino> chain;
 
-    public DominoeTileChain() {
+    public DominoTileChain() {
         chain = new LinkedList<>();
     }
 
@@ -26,8 +26,8 @@ public class DominoeTileChain extends AbstractDominoe implements Comparable<Domi
      * @param other new element
      * @return new chain if element was connected, otherwise returns this.
      */
-    public DominoeTileChain connect(AbstractDominoe other) {
-        DominoeTileChain result = deepCopy();
+    public DominoTileChain connect(AbstractDomino other) {
+        DominoTileChain result = deepCopy();
 
         if (result.chain.isEmpty()) {
             result.chain.add(other);
@@ -57,8 +57,8 @@ public class DominoeTileChain extends AbstractDominoe implements Comparable<Domi
      * @param other element to disconnect
      * @return new chain without element or this
      */
-    public DominoeTileChain detach(AbstractDominoe other) {
-        DominoeTileChain result = deepCopy();
+    public DominoTileChain detach(AbstractDomino other) {
+        DominoTileChain result = deepCopy();
         if (result.chain.getFirst().equals(other)) {
             result.chain.removeFirst();
             return result;
@@ -99,7 +99,7 @@ public class DominoeTileChain extends AbstractDominoe implements Comparable<Domi
      *
      * @return linked list of elements
      */
-    public LinkedList<AbstractDominoe> getChain() {
+    public LinkedList<AbstractDomino> getChain() {
         return chain;
     }
 
@@ -113,10 +113,10 @@ public class DominoeTileChain extends AbstractDominoe implements Comparable<Domi
     }
 
     @Override
-    public DominoeTileChain swap() {
-        DominoeTileChain result = new DominoeTileChain();
+    public DominoTileChain swap() {
+        DominoTileChain result = new DominoTileChain();
         Collections.reverse(chain);
-        for (AbstractDominoe dominoTile : chain) {
+        for (AbstractDomino dominoTile : chain) {
             result.connect(dominoTile.swap());
         }
         return result;
@@ -125,7 +125,7 @@ public class DominoeTileChain extends AbstractDominoe implements Comparable<Domi
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        for (AbstractDominoe dominoTile : chain) {
+        for (AbstractDomino dominoTile : chain) {
             result.append(dominoTile.toString());
         }
         return result.toString();
@@ -134,7 +134,7 @@ public class DominoeTileChain extends AbstractDominoe implements Comparable<Domi
     @Override
     public int hashCode() {
         int hash = 7;
-        for (AbstractDominoe dominoTail : chain) {
+        for (AbstractDomino dominoTail : chain) {
             hash += hash * dominoTail.hashCode();
         }
         return hash;
@@ -148,22 +148,22 @@ public class DominoeTileChain extends AbstractDominoe implements Comparable<Domi
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final DominoeTileChain other = (DominoeTileChain) obj;
+        final DominoTileChain other = (DominoTileChain) obj;
         Boolean isAllTilesEqual = true;
-        for (AbstractDominoe tile : chain) {
+        for (AbstractDomino tile : chain) {
             isAllTilesEqual &= other.chain.contains(tile);
         }
         return isAllTilesEqual && Objects.equals(this.length(), other.length());
     }
 
     @Override
-    public int compareTo(DominoeTileChain other) {
+    public int compareTo(DominoTileChain other) {
         return this.length() - other.length();
     }
 
-    private DominoeTileChain deepCopy() {
-        DominoeTileChain result = new DominoeTileChain();
-        for (AbstractDominoe dominoeTile : chain) {
+    private DominoTileChain deepCopy() {
+        DominoTileChain result = new DominoTileChain();
+        for (AbstractDomino dominoeTile : chain) {
             result.chain.add(dominoeTile);
         }
         return result;

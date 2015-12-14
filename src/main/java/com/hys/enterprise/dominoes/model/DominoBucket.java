@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * Random dominoes generator
  * @author denis
  */
-public class DominoeBucket {
+public class DominoBucket {
     
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     
@@ -29,24 +29,24 @@ public class DominoeBucket {
         }
     }
     
-    private final List<DominoeTile> dominoes = new ArrayList<>();
+    private final List<DominoTile> dominoes = new ArrayList<>();
         
-    private static DominoeBucket instance = null;
+    private static DominoBucket instance = null;
     
     private void init() {
-        for (int value1 = DominoeTile.MIN_VALUE; value1 <= DominoeTile.MAX_VALUE; value1++) {
-            for (int value2 = DominoeTile.MIN_VALUE; value2 <= value1; value2++) {
+        for (int value1 = DominoTile.MIN_VALUE; value1 <= DominoTile.MAX_VALUE; value1++) {
+            for (int value2 = DominoTile.MIN_VALUE; value2 <= value1; value2++) {
                 try {
-                    DominoeTile dominoTile = new DominoeTile(value1, value2);
+                    DominoTile dominoTile = new DominoTile(value1, value2);
                     dominoes.add(dominoTile);
-                } catch (DominoeTile.InvalidDominoTileException ex) {
+                } catch (DominoTile.InvalidDominoTileException ex) {
                     System.err.println(ex.getMessage());
                 }
             }
         }
     }
 
-    private DominoeBucket() {
+    private DominoBucket() {
         init();
         logger.info(String.format("Bucket contains %d dominoes tiles", dominoes.size()));
     }
@@ -55,9 +55,9 @@ public class DominoeBucket {
      * Singleton pattern
      * @return
      */
-    public static DominoeBucket getInstance() {
+    public static DominoBucket getInstance() {
         if (instance == null) {
-            instance = new DominoeBucket();
+            instance = new DominoBucket();
         } 
         return instance;
     }
@@ -68,9 +68,9 @@ public class DominoeBucket {
      * @return
      * @throws DominoBucketIsEmptyException
      */
-    public List<AbstractDominoe> getRandomTiles(Integer number) throws DominoBucketIsEmptyException {
+    public List<AbstractDomino> getRandomTiles(Integer number) throws DominoBucketIsEmptyException {
         Collections.shuffle(dominoes);
-        List<AbstractDominoe> result = new ArrayList<>();
+        List<AbstractDomino> result = new ArrayList<>();
         for (int i = 0; i < number; i++) {
             if (i < dominoes.size())
                 result.add(dominoes.get(i));

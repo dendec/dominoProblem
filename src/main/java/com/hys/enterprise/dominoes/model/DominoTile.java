@@ -11,7 +11,7 @@ import java.util.Objects;
  * Dominoe entity
  * @author denis
  */
-public class DominoeTile extends AbstractDominoe implements Comparable<DominoeTile> {
+public class DominoTile extends AbstractDomino implements Comparable<DominoTile> {
 
     private Integer valueLeft;
     private Integer valueRight;
@@ -30,12 +30,12 @@ public class DominoeTile extends AbstractDominoe implements Comparable<DominoeTi
      * @param valueRight
      * @throws InvalidDominoTileException
      */
-    public DominoeTile(Integer valueLeft, Integer valueRight) throws DominoeTile.InvalidDominoTileException {
+    public DominoTile(Integer valueLeft, Integer valueRight) throws DominoTile.InvalidDominoTileException {
         if (isCorrectValue(valueLeft) && isCorrectValue(valueRight)) {
             this.valueLeft = valueLeft;
             this.valueRight = valueRight;
         } else {
-            throw new DominoeTile.InvalidDominoTileException(valueLeft, valueRight);
+            throw new DominoTile.InvalidDominoTileException(valueLeft, valueRight);
         }
     }
 
@@ -54,9 +54,9 @@ public class DominoeTile extends AbstractDominoe implements Comparable<DominoeTi
     }
 
     @Override
-    public DominoeTile swap() {
+    public DominoTile swap() {
         try {
-            return new DominoeTile(valueRight, valueLeft);
+            return new DominoTile(valueRight, valueLeft);
         } catch (InvalidDominoTileException ex) {
             System.out.println("Something strange happens. " + ex.getMessage());
             return null;
@@ -81,13 +81,13 @@ public class DominoeTile extends AbstractDominoe implements Comparable<DominoeTi
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final DominoeTile other = (DominoeTile) obj;
+        final DominoTile other = (DominoTile) obj;
         return (this.valueLeft.equals(other.valueLeft) && this.valueRight.equals(other.valueRight))
                 || (this.valueRight.equals(other.valueLeft) && this.valueLeft.equals(other.valueRight));
     }
 
     @Override
-    public int compareTo(DominoeTile o) {
+    public int compareTo(DominoTile o) {
         return getValueLeft() * 10 + getValueRight() - o.getValueLeft() * 10 - o.getValueRight();
     }
     

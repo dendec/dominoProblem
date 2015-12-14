@@ -5,8 +5,8 @@
  */
 package com.hys.enterprise.dominoes.solvers;
 
-import com.hys.enterprise.dominoes.model.AbstractDominoe;
-import com.hys.enterprise.dominoes.model.DominoeTileChain;
+import com.hys.enterprise.dominoes.model.AbstractDomino;
+import com.hys.enterprise.dominoes.model.DominoTileChain;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -18,17 +18,17 @@ import org.slf4j.LoggerFactory;
  *
  * @author denis
  */
-public class LongestChainDFSSolver implements DominoeSolverInterface {
+public class LongestChainDFSSolver implements DominoSolverInterface {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private DominoeTileChain longestChain;
+    private DominoTileChain longestChain;
 
     @Override
-    public AbstractDominoe solve(List<AbstractDominoe> dominoes) {
-        longestChain = new DominoeTileChain();
-        Set<DominoeTileChain> result = new HashSet<>();
-        for (AbstractDominoe dominoe : dominoes) {
+    public AbstractDomino solve(List<AbstractDomino> dominoes) {
+        longestChain = new DominoTileChain();
+        Set<DominoTileChain> result = new HashSet<>();
+        for (AbstractDomino dominoe : dominoes) {
             Integer startIndex = dominoes.indexOf(dominoe);
             logger.info("Start index = " + startIndex);
             DFS(startIndex, dominoes);
@@ -36,14 +36,14 @@ public class LongestChainDFSSolver implements DominoeSolverInterface {
         return longestChain;
     }
 
-    private void DFS(Integer vertexIndex, List<AbstractDominoe> dominoes) {
+    private void DFS(Integer vertexIndex, List<AbstractDomino> dominoes) {
         Boolean[] visitedVertices = new Boolean[dominoes.size()];
         Arrays.fill(visitedVertices, false);
-        DominoeTileChain chain = new DominoeTileChain();
+        DominoTileChain chain = new DominoTileChain();
         runDFS(vertexIndex, chain, dominoes, visitedVertices);
     }
 
-    private void runDFS(Integer vertexIndex, DominoeTileChain chain, List<AbstractDominoe> dominoes, Boolean[] visitedVertices) {
+    private void runDFS(Integer vertexIndex, DominoTileChain chain, List<AbstractDomino> dominoes, Boolean[] visitedVertices) {
         visitedVertices[vertexIndex] = true;
         for (int index = 0; index < dominoes.size(); index++) {
             if (dominoes.get(vertexIndex).canBeConnected(dominoes.get(index))
@@ -51,7 +51,7 @@ public class LongestChainDFSSolver implements DominoeSolverInterface {
                 runDFS(index, chain.connect(dominoes.get(vertexIndex)), dominoes, visitedVertices);
             }
         }
-        DominoeTileChain newChain = chain.connect(dominoes.get(vertexIndex));
+        DominoTileChain newChain = chain.connect(dominoes.get(vertexIndex));
         if (longestChain.length() < newChain.length()) {
             longestChain = newChain;
             logger.info("New longest chain: " + longestChain);

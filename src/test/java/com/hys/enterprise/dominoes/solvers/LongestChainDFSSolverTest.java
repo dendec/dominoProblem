@@ -5,9 +5,9 @@
  */
 package com.hys.enterprise.dominoes.solvers;
 
-import com.hys.enterprise.dominoes.model.AbstractDominoe;
-import com.hys.enterprise.dominoes.model.DominoeTile;
-import com.hys.enterprise.dominoes.model.DominoeTileChain;
+import com.hys.enterprise.dominoes.model.AbstractDomino;
+import com.hys.enterprise.dominoes.model.DominoTile;
+import com.hys.enterprise.dominoes.model.DominoTileChain;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
@@ -28,15 +28,15 @@ public class LongestChainDFSSolverTest {
      * com.hys.enterprise.dominoes.model.DominoeTile.InvalidDominoTileException
      */
     @Test
-    public void testSolve1() throws DominoeTile.InvalidDominoTileException {
+    public void testSolve1() throws DominoTile.InvalidDominoTileException {
         //[1|1], [2|2], [3|3], [4|4], [5|5], [6|6], [0|0];
-        List<AbstractDominoe> dominoes
-                = Arrays.asList(new DominoeTile(1, 1),
-                        new DominoeTile(2, 2), new DominoeTile(3, 3),
-                        new DominoeTile(4, 4), new DominoeTile(5, 5),
-                        new DominoeTile(6, 6), new DominoeTile(0, 0));
+        List<AbstractDomino> dominoes
+                = Arrays.asList(new DominoTile(1, 1),
+                        new DominoTile(2, 2), new DominoTile(3, 3),
+                        new DominoTile(4, 4), new DominoTile(5, 5),
+                        new DominoTile(6, 6), new DominoTile(0, 0));
         Integer expResult = 1;
-        DominoeTileChain result = (DominoeTileChain) solver.solve(dominoes);
+        DominoTileChain result = (DominoTileChain) solver.solve(dominoes);
         assertEquals("One element chain:", expResult, result.length());
     }
 
@@ -47,15 +47,15 @@ public class LongestChainDFSSolverTest {
      * com.hys.enterprise.dominoes.model.DominoeTile.InvalidDominoTileException
      */
     @Test
-    public void testSolve2() throws DominoeTile.InvalidDominoTileException {
+    public void testSolve2() throws DominoTile.InvalidDominoTileException {
         //[1|1], [2|2], [3|3], [4|4], [5|5], [6|6], [1|0];
-        List<AbstractDominoe> dominoes
-                = Arrays.asList(new DominoeTile(1, 1),
-                        new DominoeTile(2, 2), new DominoeTile(3, 3),
-                        new DominoeTile(4, 4), new DominoeTile(5, 5),
-                        new DominoeTile(6, 6), new DominoeTile(1, 0));
+        List<AbstractDomino> dominoes
+                = Arrays.asList(new DominoTile(1, 1),
+                        new DominoTile(2, 2), new DominoTile(3, 3),
+                        new DominoTile(4, 4), new DominoTile(5, 5),
+                        new DominoTile(6, 6), new DominoTile(1, 0));
         Integer expResult = 2;
-        DominoeTileChain result = (DominoeTileChain) solver.solve(dominoes);
+        DominoTileChain result = (DominoTileChain) solver.solve(dominoes);
         assertEquals("Two element chain:", expResult, result.length());
     }
 
@@ -66,15 +66,15 @@ public class LongestChainDFSSolverTest {
      * com.hys.enterprise.dominoes.model.DominoeTile.InvalidDominoTileException
      */
     @Test
-    public void testSolve3() throws DominoeTile.InvalidDominoTileException {
+    public void testSolve3() throws DominoTile.InvalidDominoTileException {
         //[0|0], [1|1], [2|2], [3|3], [4|4], [5|5], [6|6], [1|0];
-        List<AbstractDominoe> dominoes
-                = Arrays.asList(new DominoeTile(0, 0), new DominoeTile(1, 1),
-                        new DominoeTile(2, 2), new DominoeTile(3, 3),
-                        new DominoeTile(4, 4), new DominoeTile(5, 5),
-                        new DominoeTile(6, 6), new DominoeTile(1, 0));
+        List<AbstractDomino> dominoes
+                = Arrays.asList(new DominoTile(0, 0), new DominoTile(1, 1),
+                        new DominoTile(2, 2), new DominoTile(3, 3),
+                        new DominoTile(4, 4), new DominoTile(5, 5),
+                        new DominoTile(6, 6), new DominoTile(1, 0));
         Integer expResult = 3;
-        DominoeTileChain result = (DominoeTileChain) solver.solve(dominoes);
+        DominoTileChain result = (DominoTileChain) solver.solve(dominoes);
         assertEquals("Three element chain:", expResult, result.length());
     }
 }

@@ -5,10 +5,10 @@
  */
 package com.hys.enterprise.dominoes.reporting;
 
-import com.hys.enterprise.dominoes.model.AbstractDominoe;
-import com.hys.enterprise.dominoes.model.DominoeBucket;
-import com.hys.enterprise.dominoes.model.DominoeTileChain;
-import com.hys.enterprise.dominoes.solvers.DominoeSolverInterface;
+import com.hys.enterprise.dominoes.model.AbstractDomino;
+import com.hys.enterprise.dominoes.model.DominoBucket;
+import com.hys.enterprise.dominoes.model.DominoTileChain;
+import com.hys.enterprise.dominoes.solvers.DominoSolverInterface;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +25,7 @@ public class Benchmark {
 
     private final String REPORT_FILENAME = "results.csv";
 
-    private final List<DominoeSolverInterface> solvers;
+    private final List<DominoSolverInterface> solvers;
     private ReportBuilder reportBuilder = null;
 
     /**
@@ -33,20 +33,20 @@ public class Benchmark {
      * @param solvers 
      * @throws IOException
      */
-    public Benchmark(DominoeSolverInterface... solvers) throws IOException {
+    public Benchmark(DominoSolverInterface... solvers) throws IOException {
         this.solvers = Arrays.asList(solvers);
         this.reportBuilder = new ReportBuilder(REPORT_FILENAME);
     }
 
     /**
      * run benchmark.
-     * @param iterations number of iterations with fixed dominoe quantity
+     * @param iterations number of iterations with fixed domino quantity
      * @param minDominoeQuantity min dominoes set length
      * @param maxDominoeQuantity max dominoes set length
-     * @throws DominoeBucket.DominoBucketIsEmptyException
+     * @throws DominoBucket.DominoBucketIsEmptyException
      * @throws IOException
      */
-    public void run(Integer iterations, Integer minDominoeQuantity, Integer maxDominoeQuantity) throws DominoeBucket.DominoBucketIsEmptyException, IOException {
+    public void run(Integer iterations, Integer minDominoeQuantity, Integer maxDominoeQuantity) throws DominoBucket.DominoBucketIsEmptyException, IOException {
         for (int dominoesNumber = minDominoeQuantity; dominoesNumber <= maxDominoeQuantity; dominoesNumber++) {
             for (int iter = 0; iter < iterations; iter++) {
                 runIteration(dominoesNumber);
@@ -54,16 +54,22 @@ public class Benchmark {
         }
     }
 
-    private void runIteration(Integer dominoesNumber) throws DominoeBucket.DominoBucketIsEmptyException, IOException {
-        List<AbstractDominoe> dominoes = DominoeBucket.getInstance().getRandomTiles(dominoesNumber);
+     /**
+     * run solvers once for certain dominoes number.
+     * @param dominoesNumber number of iterations with fixed domino quantity
+     * @throws com.hys.enterprise.dominoes.model.DominoBucket.DominoBucketIsEmptyException
+     * @throws IOException
+     */
+    public void runIteration(Integer dominoesNumber) throws DominoBucket.DominoBucketIsEmptyException, IOException {
+        List<AbstractDomino> dominoes = DominoBucket.getInstance().getRandomTiles(dominoesNumber);
         ReportRecord reportRecord = new ReportRecord(dominoes);
-        for (DominoeSolverInterface solver : solvers) {
+        for (DominoSolverInterface solver : solvers) {
             Long startTime = java.lang.System.currentTimeMillis();
-            AbstractDominoe result = solver.solve(dominoes);
+            AbstractDomino result = solver.solve(dominoes);
             Long calcTime = java.lang.System.currentTimeMillis() - startTime;
             reportRecord.addResult(solver, result, calcTime);
             logger.info(String.format("input for %s: %d. result: %d. Calculations takes %d millis", solver.getClass().getSimpleName(), 
-                    dominoes.size(), ((DominoeTileChain) result).length(), calcTime));
+                    dominoes.size(), ((DominoTileChain) result).length(), calcTime));
             logger.info(reportRecord.toString());
         }
         reportBuilder.writeRecord(reportRecord);

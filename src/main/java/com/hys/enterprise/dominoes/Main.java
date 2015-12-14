@@ -5,11 +5,11 @@
  */
 package com.hys.enterprise.dominoes;
 
-import com.hys.enterprise.dominoes.model.AbstractDominoe;
+import com.hys.enterprise.dominoes.model.AbstractDomino;
 import com.hys.enterprise.dominoes.solvers.LongestChainBacktrackingSolver;
-import com.hys.enterprise.dominoes.model.DominoeBucket;
+import com.hys.enterprise.dominoes.model.DominoBucket;
 import com.hys.enterprise.dominoes.reporting.Benchmark;
-import com.hys.enterprise.dominoes.solvers.DominoeSolverInterface;
+import com.hys.enterprise.dominoes.solvers.DominoSolverInterface;
 import com.hys.enterprise.dominoes.solvers.LongestChainBFSSolver;
 import com.hys.enterprise.dominoes.solvers.LongestChainDFSSolver;
 import java.io.IOException;
@@ -34,14 +34,14 @@ public class Main {
                     new LongestChainBFSSolver()
             );
             benchmark.run(10, 5, 19);
-        } catch (IOException | DominoeBucket.DominoBucketIsEmptyException ex) {
+        } catch (IOException | DominoBucket.DominoBucketIsEmptyException ex) {
             logger.error("Error: " + ex);
         }
     }
 
-    private static void run(DominoeSolverInterface solver, List<AbstractDominoe> dominoes) {
+    private static void run(DominoSolverInterface solver, List<AbstractDomino> dominoes) {
         Long startTime = java.lang.System.currentTimeMillis();
-        AbstractDominoe result = solver.solve(dominoes);
+        AbstractDomino result = solver.solve(dominoes);
         logger.info(String.format("%s result: %s", solver.getClass().getSimpleName(), result));
         logger.info("Time: " + (java.lang.System.currentTimeMillis() - startTime));
     }

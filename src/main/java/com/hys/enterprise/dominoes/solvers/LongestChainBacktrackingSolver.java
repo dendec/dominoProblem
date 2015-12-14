@@ -5,10 +5,10 @@
  */
 package com.hys.enterprise.dominoes.solvers;
 
-import com.hys.enterprise.dominoes.model.AbstractDominoe;
-import com.hys.enterprise.dominoes.utils.DominoeMatrix;
-import com.hys.enterprise.dominoes.model.DominoeTileChain;
-import com.hys.enterprise.dominoes.model.DominoeTile;
+import com.hys.enterprise.dominoes.model.AbstractDomino;
+import com.hys.enterprise.dominoes.utils.DominoMatrix;
+import com.hys.enterprise.dominoes.model.DominoTileChain;
+import com.hys.enterprise.dominoes.model.DominoTile;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.slf4j.Logger;
@@ -20,33 +20,33 @@ import org.slf4j.LoggerFactory;
  * Can be very fast if all elements can be united in chain, but usually slow.
  * @author denis
  */
-public class LongestChainBacktrackingSolver implements DominoeSolverInterface {
+public class LongestChainBacktrackingSolver implements DominoSolverInterface {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private volatile DominoeTileChain longestChain;
+    private volatile DominoTileChain longestChain;
     private Integer dominoeNumber;
 
     @Override
-    public AbstractDominoe solve(List<AbstractDominoe> dominoes) {
+    public AbstractDomino solve(List<AbstractDomino> dominoes) {
         logger.info("Dominoes:" + dominoes);
         this.dominoeNumber = dominoes.size();
-        DominoeMatrix matrix = new DominoeMatrix(dominoes);
+        DominoMatrix matrix = new DominoMatrix(dominoes);
         logger.debug(matrix.toString());
-        longestChain = new DominoeTileChain();
-        IntStream.rangeClosed(0, AbstractDominoe.MAX_VALUE).parallel().
+        longestChain = new DominoTileChain();
+        IntStream.rangeClosed(0, AbstractDomino.MAX_VALUE).parallel().
             forEach(i -> {
-                makeChain(i, new DominoeMatrix(dominoes), new DominoeTileChain());
+                makeChain(i, new DominoMatrix(dominoes), new DominoTileChain());
                 logger.info("Chain started from " + i + " is done");
             });
         logger.info("Solved. Longest chain length: " + longestChain.length());
         return longestChain;
     }
 
-    private void makeChain(Integer i, DominoeMatrix matrix, DominoeTileChain currentChain) {
-        for (int j = 0; j <= DominoeTile.MAX_VALUE; j++) {
+    private void makeChain(Integer i, DominoMatrix matrix, DominoTileChain currentChain) {
+        for (int j = 0; j <= DominoTile.MAX_VALUE; j++) {
             if (matrix.isPresent(i, j)) {
-                AbstractDominoe dominoTile = matrix.take(i, j);
+                AbstractDomino dominoTile = matrix.take(i, j);
                 logger.debug("Take " + dominoTile);
                 logger.debug(matrix.toString());
                 if (currentChain.canBeConnected(dominoTile)) {
@@ -61,7 +61,7 @@ public class LongestChainBacktrackingSolver implements DominoeSolverInterface {
                     logger.info("Find longest chain");
                     return;
                 }
-                DominoeTileChain x = currentChain.detach(dominoTile);
+                DominoTileChain x = currentChain.detach(dominoTile);
                 currentChain = x;
                 logger.debug("Detach: " + dominoTile);
                 logger.debug("Current chain: " + currentChain);
@@ -72,7 +72,7 @@ public class LongestChainBacktrackingSolver implements DominoeSolverInterface {
         }
     }
 
-    private synchronized void setLongestChain(DominoeTileChain currentChain) {
+    private synchronized void setLongestChain(DominoTileChain currentChain) {
         if (longestChain.length() < currentChain.length()) {
             longestChain = currentChain;
             logger.info("Find new longest chain:" + longestChain);

@@ -5,7 +5,7 @@
  */
 package com.hys.enterprise.dominoes.utils;
 
-import com.hys.enterprise.dominoes.model.AbstractDominoe;
+import com.hys.enterprise.dominoes.model.AbstractDomino;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,26 +13,26 @@ import java.util.Optional;
  *
  * @author denis
  */
-public final class DominoeMatrix extends Matrix<AbstractDominoe> {
+public final class DominoMatrix extends Matrix<AbstractDomino> {
     
     private Integer dominoesNumber = 0;
 
-    public DominoeMatrix(List<AbstractDominoe> dominoes) {
-        super(AbstractDominoe.MAX_VALUE + 1, Optional.empty());
-        for (AbstractDominoe dominoe : dominoes) {
+    public DominoMatrix(List<AbstractDomino> dominoes) {
+        super(AbstractDomino.MAX_VALUE + 1, Optional.empty());
+        for (AbstractDomino dominoe : dominoes) {
             this.put(dominoe);
         }
     }
 
-    public void put(AbstractDominoe dominoe) {
+    public void put(AbstractDomino dominoe) {
         this.set(dominoe, dominoe.getValueLeft(), dominoe.getValueRight());
         this.set(dominoe, dominoe.getValueRight(), dominoe.getValueLeft());
         dominoesNumber ++;
     }
 
     @Override
-    public AbstractDominoe take(Integer row, Integer col) {
-        AbstractDominoe result = get(row, col);
+    public AbstractDomino take(Integer row, Integer col) {
+        AbstractDomino result = get(row, col);
         matrix[row][col] = Optional.empty();
         matrix[col][row] = Optional.empty();
         dominoesNumber --;
