@@ -1,4 +1,4 @@
-# dominoeProblem
+# Longest domino chain problem
 
 The task is to develop simple console java application that finds longest chain of tiles from the dominoes game.
 The tiles of standard dominoes game set are shuffled then N (user input) of them randomly selected for the chaining.
