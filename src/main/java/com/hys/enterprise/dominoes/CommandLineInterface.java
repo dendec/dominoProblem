@@ -40,8 +40,10 @@ public class CommandLineInterface {
 
     private void multipleRunPrompt(Benchmark benchmark) throws DominoBucket.DominoBucketIsEmptyException, IOException {
         Integer iterations = consoleReader.getInteger("Enter number of iterations: ");
-        Integer min = consoleReader.getInteger("Enter minimum number of dominoes: ", 1, 28);
-        Integer max = consoleReader.getInteger("Enter maximum number of dominoes: ", 1, 28);
+        Integer min = consoleReader.getInteger(
+                String.format("Enter minimum number of dominoes (%d, %d): ", 1, 28), 1, 28);
+        Integer max = consoleReader.getInteger(
+                String.format("Enter maximum number of dominoes (%d, %d): ", min, 28), min, 28);
         benchmark.run(iterations, min, max);
     }
 

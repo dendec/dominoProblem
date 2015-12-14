@@ -37,7 +37,7 @@ public class Benchmark {
     public Benchmark(DominoSolverInterface... solvers) throws IOException {
         this.solvers = Arrays.asList(solvers);
         this.reportBuilder = new ReportBuilder(REPORT_FILENAME);
-        logger.info("Benchmark created with solvers: " + 
+        logger.info("Registered solvers: " + 
                 this.solvers.stream().map(solver -> solver.getClass().getSimpleName()).collect(Collectors.toList()));
     }
 
@@ -72,9 +72,10 @@ public class Benchmark {
             AbstractDomino result = solver.solve(dominoes);
             Long calcTime = java.lang.System.currentTimeMillis() - startTime;
             reportRecord.addResult(solver, result, calcTime);
-            logger.info(String.format("%s: result length - %d, chain: %s.\nCalculations takes %d millis", solver.getClass().getSimpleName(), 
+            logger.info(String.format("%-30s: result length - %d, chain - %s.\nCalculations takes %d millis", solver.getClass().getSimpleName(), 
                 ((DominoTileChain) result).length(), result.toString(), calcTime));
         }
+        System.out.println();
         reportBuilder.writeRecord(reportRecord);
     }
 
