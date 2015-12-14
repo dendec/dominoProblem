@@ -8,7 +8,7 @@ package com.hys.enterprise.dominoes.model;
 import java.util.Objects;
 
 /**
- * Dominoe entity
+ * Domino entity
  * @author denis
  */
 public class DominoTile extends AbstractDomino implements Comparable<DominoTile> {
@@ -24,7 +24,7 @@ public class DominoTile extends AbstractDomino implements Comparable<DominoTile>
     }
 
     /**
-     * Creates dominoe entity with. 
+     * Creates domino entity with. 
      * Values should be more than MIN_VALUE and less than MAX_VALUE.
      * @param valueLeft 
      * @param valueRight

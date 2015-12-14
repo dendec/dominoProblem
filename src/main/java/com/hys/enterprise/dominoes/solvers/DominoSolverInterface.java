@@ -9,7 +9,7 @@ import com.hys.enterprise.dominoes.model.AbstractDomino;
 import java.util.List;
 
 /**
- * interface for solving any dominoe problems
+ * interface for solving any domino problems
  * @author denis
  */
 public interface DominoSolverInterface {

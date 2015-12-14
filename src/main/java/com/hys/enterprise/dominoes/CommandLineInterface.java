@@ -8,7 +8,6 @@ package com.hys.enterprise.dominoes;
 import com.hys.enterprise.dominoes.model.DominoBucket;
 import com.hys.enterprise.dominoes.reporting.Benchmark;
 import java.io.IOException;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -28,7 +27,6 @@ public class CommandLineInterface {
     }
 
     private Boolean isSingleRun() {
-//        Pattern p = Pattern.compile("^(s|b)\\", Pattern.DOTALL);
         String input = consoleReader.getString("\"s\" for single run, \"b\" for benchmark: ", "s", "b");
         return "s".equals(input);
     }
