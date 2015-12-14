@@ -33,30 +33,10 @@ public class Main {
                     new LongestChainBacktrackingSolver(),
                     new LongestChainBFSSolver()
             );
-            benchmark.run(10, 5, 19);
+            CommandLineInterface commandLineInterface = new CommandLineInterface(benchmark);
         } catch (IOException | DominoBucket.DominoBucketIsEmptyException ex) {
             logger.error("Error: " + ex);
         }
     }
 
-    private static void run(DominoSolverInterface solver, List<AbstractDomino> dominoes) {
-        Long startTime = java.lang.System.currentTimeMillis();
-        AbstractDomino result = solver.solve(dominoes);
-        logger.info(String.format("%s result: %s", solver.getClass().getSimpleName(), result));
-        logger.info("Time: " + (java.lang.System.currentTimeMillis() - startTime));
-    }
-
-    private static Integer getNumber(String message) {
-        Integer dominoesNumber = null;
-        do {
-            System.out.print(message);
-            Scanner scanner = new Scanner(System.in);
-            try {
-                dominoesNumber = Integer.parseInt(scanner.next());
-            } catch (NumberFormatException e) {
-                logger.error("Invalid number");
-            }
-        } while (dominoesNumber == null);
-        return dominoesNumber;
-    }
 }

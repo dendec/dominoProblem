@@ -12,6 +12,7 @@ import com.hys.enterprise.dominoes.solvers.DominoSolverInterface;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +37,8 @@ public class Benchmark {
     public Benchmark(DominoSolverInterface... solvers) throws IOException {
         this.solvers = Arrays.asList(solvers);
         this.reportBuilder = new ReportBuilder(REPORT_FILENAME);
+        logger.info("Benchmark created with solvers: " + 
+                this.solvers.stream().map(solver -> solver.getClass().getSimpleName()).collect(Collectors.toList()));
     }
 
     /**
@@ -49,7 +52,7 @@ public class Benchmark {
     public void run(Integer iterations, Integer minDominoeQuantity, Integer maxDominoeQuantity) throws DominoBucket.DominoBucketIsEmptyException, IOException {
         for (int dominoesNumber = minDominoeQuantity; dominoesNumber <= maxDominoeQuantity; dominoesNumber++) {
             for (int iter = 0; iter < iterations; iter++) {
-                runIteration(dominoesNumber);
+                runOnce(dominoesNumber);
             }
         }
     }
@@ -60,17 +63,17 @@ public class Benchmark {
      * @throws com.hys.enterprise.dominoes.model.DominoBucket.DominoBucketIsEmptyException
      * @throws IOException
      */
-    public void runIteration(Integer dominoesNumber) throws DominoBucket.DominoBucketIsEmptyException, IOException {
+    public void runOnce(Integer dominoesNumber) throws DominoBucket.DominoBucketIsEmptyException, IOException {
         List<AbstractDomino> dominoes = DominoBucket.getInstance().getRandomTiles(dominoesNumber);
         ReportRecord reportRecord = new ReportRecord(dominoes);
+        logger.info(String.format("Input length %d. Set: %s", dominoes.size(), dominoes.toString()));
         for (DominoSolverInterface solver : solvers) {
             Long startTime = java.lang.System.currentTimeMillis();
             AbstractDomino result = solver.solve(dominoes);
             Long calcTime = java.lang.System.currentTimeMillis() - startTime;
             reportRecord.addResult(solver, result, calcTime);
-            logger.info(String.format("input for %s: %d. result: %d. Calculations takes %d millis", solver.getClass().getSimpleName(), 
-                    dominoes.size(), ((DominoTileChain) result).length(), calcTime));
-            logger.info(reportRecord.toString());
+            logger.info(String.format("%s: result length - %d, chain: %s.\nCalculations takes %d millis", solver.getClass().getSimpleName(), 
+                ((DominoTileChain) result).length(), result.toString(), calcTime));
         }
         reportBuilder.writeRecord(reportRecord);
     }
